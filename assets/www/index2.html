@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="UTF-8">
+
+<title>Panel Enterprises Corp</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="css/jquery.mobile-1.2.0.min.css" />
+<link rel="stylesheet" href="css/style.css" />
+
+<script type="text/javascript" charset="utf-8" src="js/libs/cordova-2.1.0.js"></script>
+<script src="js/libs/jquery-1.8.2.min.js"></script>
+<script src="js/libs/jquery.mobile-1.2.0.min.js"></script>
+
+<script src="js/util.js"></script>
+<script src="js/login.js"></script>
+<script type="text/javascript">
+	$(document).on('pageinit', panelApp.connect);
+</script>
+
+</head>
+
+<body>
+
+<!--
+****************************************** 
+Page: welcome
+******************************************
+ -->
+
+<div data-role="page" id="pgWelcome">
+
+	<div data-role="header">
+		<h1>Panel</h1><h2>Welcome!</h2>
+	</div><!-- /header -->
+	
+	<div id="notification"></div>
+	
+	<div data-role="content" id="cntWelcome">
+		<h1>Welcome!</h1>
+		<div data-role="popup" id="notification"></div>
+		<a href="#" data-role="button" data-inline="true" id="cmdLogOut">Logout</a>
+	</div><!-- /content -->
+
+	<div data-role="footer" data-position="fixed">
+		<h4>Page Footer</h4>
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+</body>
+
+</html>

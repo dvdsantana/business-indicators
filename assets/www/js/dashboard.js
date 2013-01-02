@@ -24,7 +24,15 @@ panelApp.indexDone = function(data, textStatus, jqXHR){
 		$(li).append(a);
 		$("#enterprisesList").append(li);
 	}
-	$("#enterprisesList").listview('refresh');
+	$("#enterprisesList").listview('refresh');	
+}
+
+$(document).on('pageinit', '#pgEnterprise', function(event) {
+	$('ul#enterprisesList').on('click', 'li', panelApp.showEnterprise);
+});
+
+panelApp.showEnterprise = function(event) {
+	panelApp.showObject(event);
 }
 
 panelApp.indexFail = function(jqXHR, textStatus, errorThrown){

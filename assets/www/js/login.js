@@ -81,7 +81,7 @@ panelApp.loginDone = function(data, textStatus, jqXHR) {
 		//panelApp.storeDeviceDB();
 		
 		panelApp.showButtons();
-		panelApp.retrieveEnterprise();
+		panelApp.getEnterprise();
 		$.mobile.changePage('dashboard.html');
 		
 	} else {

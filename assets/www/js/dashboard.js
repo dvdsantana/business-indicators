@@ -58,9 +58,10 @@ panelApp.getEnterpriseById = function(id) {
 }
 
 panelApp.enterpriseDone = function(data, textStatus, jqXHR) {
+	var enterpriseInfo = data;
+	panelApp.showObject(enterpriseInfo);
+	$.mobile.changePage('enterprise.html', {data:enterpriseInfo});
 	
-	$.mobile.changePage('enterprise.html', {data:data});
-//	panelApp.showObject(data);
 	
 }
 

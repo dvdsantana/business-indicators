@@ -8,11 +8,15 @@ panelApp.wsLogout = panelApp.HOST + 'ws/user/logout';
 panelApp.ROL = [4];
 
 $(document).on('pageinit', '#pgWelcome', function(event) {
-	panelApp.showButtons();
 	document.addEventListener("deviceready", panelApp.connect, false);
 });
 
+$(document).on('pageinit', '#pgLogin', function(event) {
+	panelApp.showButtons();
+});
+
 panelApp.showButtons = function() {
+	
 	$('#cmdLogIn').click(panelApp.logIn);
 	$('#cmdLogOut').click(panelApp.logOut);
 	$('#cmdLogOut').hide();
@@ -20,7 +24,7 @@ panelApp.showButtons = function() {
 
 panelApp.connect = function() {
 	
-	$('#notification').text($('#notification').text() + '\nConnecting...');
+	$('#notification').text($('#notification').text() + '\n Connecting...');
 	
 	$.ajax({
 	      url: panelApp.wsConnect,
@@ -35,10 +39,13 @@ panelApp.connectDone = function(data, textStatus, jqXHR) {
 	var msg = 'Connect done! Redirecting to login page... \n';
 	
 	// User is not logged then uid (user id) = 0
-	if (parseInt(data.user.uid, 10) == 0)
-		$.mobile.loadpage("login.html", { transition: 'slideup'} );
-	else
+	if (parseInt(data.user.uid, 10) == 0) {
+		$.mobile.changePage("login.html", { transition: 'slideup'} );
+		panelApp.showButtons();
+	}
+	else {
 		panelApp.loginDone(data);
+	}
 }
 
 panelApp.connectFail = function(jqXHR, textStatus, errorThrown) {
@@ -53,6 +60,7 @@ panelApp.connectAlways = function (jqXHR, textStatus)  {
 }
 
 panelApp.logIn = function() {
+	alert('click');
 	
 	var username = $('input#username').val();
 	var password = $('input#password').val();
@@ -76,7 +84,9 @@ panelApp.logIn = function() {
 
 panelApp.loginDone = function(data, textStatus, jqXHR) {
 	
+//	alert('loginDone /n');
 	if (panelApp.userIsGranted(data)) {
+//		alert('granted /n');
 		// Store uuid into database
 		//panelApp.storeDeviceDB();
 		
@@ -141,7 +151,7 @@ panelApp.logOut = function() {
 panelApp.logOutDone = function(data, textStatus, jqXHR) {
 	
 	$('#cmdLogOut').hide();
-	$.mobile.loadPage('index.html');
+	$.mobile.changePage('index.html');
 }
 
 panelApp.logOutFail = function(jqXHR, textStatus, errorThrown) {

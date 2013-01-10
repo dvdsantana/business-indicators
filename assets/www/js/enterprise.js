@@ -1,9 +1,10 @@
 //Variable Hoisting
 
 panelApp.showEnterpriseById = function(event, data) {
-	panelApp.showObject(event);
+	alert('ready');
+	panelApp.showObject(data);
 };
 
-$(document).on('pageshow', '#pgEnterprise', panelApp.showEnterpriseById);
+$('#pgEnterprise').on('pagechange', panelApp.showEnterpriseById);
 
 //Variable Hoisting

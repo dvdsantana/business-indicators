@@ -19,11 +19,12 @@ panelApp.showObject = function(obj) {
 	var items = '';
 	
 	for(var key in obj) {
-		if (typeof obj[key] == "object") {
+//		if (typeof obj[key] == "object") {
 			items = items + '\n +' + key + ': ' + obj[key];
-			panelApp.showObject(obj[key]);
-		}
-		items = items + '\n -' + key + ': ' + obj[key];
+//			panelApp.showObject(obj[key]);
+//		}
+//		items = items + '\n -' + key + ': ' + obj[key];
 	}
-	console.log(items);
+//	console.log(items);
+	alert(items);
 }

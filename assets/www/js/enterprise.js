@@ -1,10 +1,18 @@
 //Variable Hoisting
 
-panelApp.showEnterpriseById = function(event, data) {
-	alert('ready');
-	panelApp.showObject(data);
-};
+panelApp.showEnterpriseById = function(event)
+{
+	var enterpriseInfo;
+	
+	enterpriseInfo = JSON.parse(sessionStorage.getItem('enterpriseInfo'));
+	
+	$('#enterpriseName').text(enterpriseInfo.title);
+	
+	$('#enterpriseTable').dataTable();
+	
+	
+}
 
-$('#pgEnterprise').on('pagechange', panelApp.showEnterpriseById);
+$(document).on('pageinit', '#pgEnterprise', panelApp.showEnterpriseById);
 
 //Variable Hoisting

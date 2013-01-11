@@ -7,26 +7,29 @@ panelApp.wsLogout = panelApp.HOST + 'ws/user/logout';
 
 panelApp.ROL = [4];
 
-$(document).on('pageinit', '#pgWelcome', function(event) {
+$(document).on('pageinit', '#pgWelcome', function(event)
+{
 	document.addEventListener("deviceready", panelApp.connect, false);
 });
 
-$(document).on('pageinit', '#pgLogin', function(event) {
+$(document).on('pageinit', '#pgLogin', function(event)
+{
 	panelApp.showButtons();
 });
 
-panelApp.showButtons = function() {
-	
+panelApp.showButtons = function()
+{	
 	$('#cmdLogIn').click(panelApp.logIn);
 	$('#cmdLogOut').click(panelApp.logOut);
 	$('#cmdLogOut').hide();
 }
 
-panelApp.connect = function() {
-	
+panelApp.connect = function()
+{	
 	$('#notification').text($('#notification').text() + '\n Connecting...');
 	
-	$.ajax({
+	$.ajax(
+	{
 	      url: panelApp.wsConnect,
 	      type: 'POST',
 	}).done(panelApp.connectDone)
@@ -34,32 +37,36 @@ panelApp.connect = function() {
 	.always(panelApp.connectAlways);
 }
 
-panelApp.connectDone = function(data, textStatus, jqXHR) {
-	
+panelApp.connectDone = function(data, textStatus, jqXHR)
+{	
 	var msg = 'Connect done! Redirecting to login page... \n';
 	
 	// User is not logged then uid (user id) = 0
-	if (parseInt(data.user.uid, 10) == 0) {
+	if (parseInt(data.user.uid, 10) == 0)
+	{
 		$.mobile.changePage("login.html", { transition: 'slideup'} );
 		panelApp.showButtons();
 	}
-	else {
+	else
+	{
 		panelApp.loginDone(data);
 	}
 }
 
-panelApp.connectFail = function(jqXHR, textStatus, errorThrown) {
-	
+panelApp.connectFail = function(jqXHR, textStatus, errorThrown)
+{	
 	var msg = errorThrown + ' connectFail Status: ' + textStatus;
 	
 	$('#notification').text($('#notification').text() + msg);
 }
 
-panelApp.connectAlways = function (jqXHR, textStatus)  {
+panelApp.connectAlways = function (jqXHR, textStatus)
+{
 //TODO
 }
 
-panelApp.logIn = function() {
+panelApp.logIn = function()
+{
 	alert('click');
 	
 	var username = $('input#username').val();
@@ -69,7 +76,8 @@ panelApp.logIn = function() {
 	
 	$('#notification').text($('#notification').text() + '\nLoging...');
 	
-	$.ajax({
+	$.ajax(
+	{
 	      url: panelApp.wsLogin,
 	      type: 'POST',
 	      data: data,
@@ -82,10 +90,10 @@ panelApp.logIn = function() {
 	.always(panelApp.loginAlways);
 }
 
-panelApp.loginDone = function(data, textStatus, jqXHR) {
-	
-//	alert('loginDone /n');
-	if (panelApp.userIsGranted(data)) {
+panelApp.loginDone = function(data, textStatus, jqXHR)
+{	
+	if (panelApp.userIsGranted(data))
+	{
 //		alert('granted /n');
 		// Store uuid into database
 		//panelApp.storeDeviceDB();
@@ -94,7 +102,8 @@ panelApp.loginDone = function(data, textStatus, jqXHR) {
 		panelApp.getEnterprise();
 		$.mobile.changePage('dashboard.html');
 		
-	} else {
+	} else
+	{
 		var msg = ' Connected user without sufficient permissions';
 		$('#notification').text($('#notification').text() + msg);
 		$('#cmdLogIn').hide();
@@ -103,24 +112,27 @@ panelApp.loginDone = function(data, textStatus, jqXHR) {
 
 }
 
-panelApp.userIsGranted = function(data) {
+panelApp.userIsGranted = function(data)
+{
 	var oRoles = data.user.roles;
 	var i = 0, granted = false;
 	
-	for (i = 0; i < panelApp.ROL.length && !granted; i++) {
+	for (i = 0; i < panelApp.ROL.length && !granted; i++)
+	{
 		granted = (oRoles.hasOwnProperty(panelApp.ROL[i]));
 	}
 	
 	return granted;
 }
 
-panelApp.storeDeviceDB = function () {
+panelApp.storeDeviceDB = function ()
+{
 //	TODO
 	var deviceID = device.uuid;
 }
 
-panelApp.loginFail = function(jqXHR, textStatus, errorThrown) {
-	
+panelApp.loginFail = function(jqXHR, textStatus, errorThrown)
+{	
 	var msg = 'Login fail! Status: ' + jqXHR.status + 'Text: ' + textStatus + 'Error: ' + errorThrown;
 	
 //	Already logged in
@@ -130,16 +142,18 @@ panelApp.loginFail = function(jqXHR, textStatus, errorThrown) {
 		alert(msg);
 }
 
-panelApp.loginAlways = function (jqXHR, textStatus)  {
+panelApp.loginAlways = function (jqXHR, textStatus)
+{
 //	TODO
 }
 
-panelApp.storeDevice = function (deviceID) {
+panelApp.storeDevice = function (deviceID)
+{
 //	TODO
 }
 
-panelApp.logOut = function() {
-	
+panelApp.logOut = function()
+{
 	$.ajax({
 		url: panelApp.wsLogout,
 		type: 'POST'
@@ -148,16 +162,19 @@ panelApp.logOut = function() {
 	.always(panelApp.logOutAlways);
 }
 
-panelApp.logOutDone = function(data, textStatus, jqXHR) {
+panelApp.logOutDone = function(data, textStatus, jqXHR)
+{
 	
 	$('#cmdLogOut').hide();
 	$.mobile.changePage('index.html');
 }
 
-panelApp.logOutFail = function(jqXHR, textStatus, errorThrown) {
+panelApp.logOutFail = function(jqXHR, textStatus, errorThrown)
+{
 //	TODO
 }
 
-panelApp.logOutAlways = function (jqXHR, textStatus)  {
+panelApp.logOutAlways = function (jqXHR, textStatus)
+{
 //	TODO
 }
